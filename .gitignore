@@ -18,6 +18,10 @@ target/
 *.iws
 *.iml
 *.ipr
+.sonarlint/
+*.log
+/target/
+/build/
 
 ### NetBeans ###
 /nbproject/private/
