@@ -5,18 +5,61 @@
 
 <h2>1. Implementação das operações CRUD para usuários sem autenticação:</h2>
 <p>Como desenvolvedor, desejo implementar as operações CRUD (Create, Read, Update, Delete) para usuários sem autenticação, de modo a permitir o cadastro, consulta, atualização e exclusão de usuários sem a necessidade de autenticação.</p>
+<p><b>Critérios de aceitação:</b></p>
+<ul>
+<li>A API deve permitir a criação de novos usuários sem exigir autenticação.</li> 
+
+<li>A API deve permitir a consulta de usuários existentes sem exigir autenticação.</li> 
+
+<li>A API deve permitir a atualização de informações de usuários existentes sem exigir autenticação.</li> 
+
+<li>A API deve permitir a exclusão de usuários existentes sem exigir autenticação.</li> 
+
+<li>A aplicação deve validar os campos necessários e formatos de dados ao criar ou atualizar usuários.</li> 
+
+<li>A aplicação deve fornecer mensagens de erro claras para operações inválidas ou dados inválidos.</li> 
+</ul>
 
 <h2>2. Implementação da autenticação usando JWT:</h2>
 <p>Como desenvolvedor, desejo implementar a autenticação usando JWT (JSON Web Token), de modo a fornecer um mecanismo seguro de autenticação para os usuários da aplicação.</p>
+<p><b>Critérios de aceitação:</b></p>
+<ul>
+<li>A autenticação deve ser realizada por meio de um token JWT gerado após o login bem-sucedido.</li>  
 
-<h2>3. Implementação das operações CRUD para usuários autenticados:</h2>
-<p>Como desenvolvedor, desejo implementar as operações CRUD para usuários autenticados, de modo a permitir o cadastro, consulta, atualização e exclusão de usuários apenas para usuários autenticados.</p>
+<li>O token JWT deve ser necessário para acessar rotas que requerem autenticação.</li> 
 
-<h2>4. Implementação das operações CRUD para carros (usuário autenticado):</h2>
+<li>A aplicação deve validar a autenticidade e a validade do token JWT em cada solicitação a uma rota autenticada.</li>  
+
+<li>Usuários com tokens inválidos ou expirados devem receber uma mensagem de erro de autenticação.</li>  
+
+<li>O sistema deve armazenar de forma segura as senhas dos usuários.</li>  
+</ul>
+
+<h2>3. Implementação das operações CRUD para carros (usuário autenticado):</h2>
 <p>Como desenvolvedor, desejo implementar as operações CRUD para carros, de modo a permitir o cadastro, consulta, atualização e exclusão de carros apenas para usuários autenticados.</p>
+<p><b>Critérios de aceitação:</b></p>
+<ul>
+<li>Apenas usuários autenticados podem realizar operações CRUD em carros.</li>  
 
-<h2>5. Implementação da lógica de ordenação dos carros e usuários conforme o requisito extra:</h2>
+<li>Cada carro deve estar associado a um usuário específico, e operações CRUD em um carro só podem ser realizadas pelo usuário a quem o carro pertence.</li>  
+
+<li>A aplicação deve validar a unicidade da placa do carro para cada usuário.</li>   
+
+<li>A aplicação deve fornecer mensagens de erro apropriadas para tentativas de operações inválidas.</li>   
+</ul>
+
+<h2>4. Implementação da lógica de ordenação dos carros e usuários conforme o requisito extra:</h2>
 <p>Como desenvolvedor, desejo implementar a lógica de ordenação dos carros e usuários conforme o requisito extra, de modo a ordenar os carros de um usuário de acordo com o total de utilizações e os usuários de acordo com o somatório total de utilizações de todos os seus carros.</p>
+<p><b>Critérios de aceitação:</b></p>
+<ul>
+<li>A aplicação deve fornecer uma funcionalidade para rastrear o número de vezes que cada carro é utilizado.</li>    
+
+<li>Ao listar carros de um usuário, a aplicação deve ordená-los pelo total de utilizações, do mais usado para o menos usado.</li>    
+
+<li>Ao listar usuários, a aplicação deve ordená-los pelo somatório total de utilizações de todos os seus carros, do mais ativo para o menos ativo.</li>    
+
+<li>A aplicação deve fornecer feedback adequado e resultados precisos, refletindo a ordenação correta baseada em utilizações.</li>   
+</ul>
 
 <h1>SOLUÇÃO:</h1>
 
