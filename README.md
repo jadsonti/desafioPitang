@@ -68,7 +68,7 @@
 <h2>Tecnologias Utilizadas:</h2>
 
 <ul>
-  <li><strong>Java 17:</strong> Utilizamos a versão 11 do Java como a linguagem principal de desenvolvimento devido à sua estabilidade, performance e suporte contínuo.</li>
+  <li><strong>Java 21:</strong> Utilizamos a versão 21 do Java como a linguagem principal de desenvolvimento devido à sua estabilidade, performance e suporte contínuo.</li>
   <li><strong>Spring Boot:</strong> Optei pelo Spring Boot como o framework de desenvolvimento devido à sua facilidade de configuração, ampla gama de funcionalidades integradas (como segurança, persistência de dados, etc.) e suporte a padrões de projeto como injeção de dependência e inversão de controle.</li>
   <li><strong>Spring Data JPA:</strong> Utilizei o Spring Data JPA para facilitar o acesso e manipulação dos dados do banco de dados H2. Isso nos permite escrever consultas de forma mais simples e eficiente, além de oferecer integração transparente com o Spring Boot.</li>
   <li><strong>H2 Database:</strong> Escolhi o H2 como o banco de dados em memória para simplificar o desenvolvimento e os testes, garantindo que não seja necessário configurar um banco de dados externo durante o desenvolvimento.</li>
