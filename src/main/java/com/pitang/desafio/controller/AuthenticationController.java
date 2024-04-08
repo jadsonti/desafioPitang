@@ -37,17 +37,15 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
 
-        // Use a chave secreta definida nas configurações
         String secretKey = env.getProperty("jwt.secret");
 
-        // Assumindo que a chave secreta é codificada em Base64 nas configurações
         byte[] decodedKey = Base64.getDecoder().decode(secretKey);
 
         String jwt = Jwts.builder()
                 .setSubject(user.getLogin())
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)))
-                .signWith(Keys.hmacShaKeyFor(decodedKey)) // Use a chave decodificada
+                .signWith(Keys.hmacShaKeyFor(decodedKey))
                 .compact();
 
         return ResponseEntity.ok(jwt);

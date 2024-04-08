@@ -72,7 +72,6 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser() {
-        // Obtém o nome de usuário do contexto de segurança
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized - No authentication information available");
@@ -80,16 +79,13 @@ public class UserController {
 
         String username = authentication.getName(); // Obtem o nome de usuário (login)
 
-        // Busca o usuário pelo login (ou username)
         Optional<User> userOptional = userRepository.findByLogin(username);
         if (!userOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
         User user = userOptional.get();
-        // Aqui você pode decidir formatar a resposta ou retornar o usuário como está
-        // Se você quiser excluir informações sensíveis como a senha, considere usar um DTO
-        // Ou simplesmente configure a entidade User para não serializar a senha
+
         return ResponseEntity.ok(user);
     }
 
