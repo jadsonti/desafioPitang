@@ -1,24 +1,35 @@
 package com.pitang.desafio.service;
 
+import com.pitang.desafio.exception.UserNotFoundException;
+import com.pitang.desafio.model.Car;
 import com.pitang.desafio.model.User;
 import com.pitang.desafio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User registerUser(User user) throws Exception {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -80,14 +91,30 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
     public User authenticate(String login, String password) {
         Optional<User> userOptional = userRepository.findByLogin(login);
-
         if (userOptional.isPresent() && passwordEncoder.matches(password, userOptional.get().getPassword())) {
             return userOptional.get();
         }
         return null;
     }
 
+    public User findByLogin(String login) {
+        Optional<User> user = userRepository.findByLogin(login);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new RuntimeException("User not found"); //
+        }
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userRepository.findByLogin(login)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with login: " + login));
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), Collections.emptyList());
+    }
+
+   
 }
