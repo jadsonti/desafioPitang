@@ -77,7 +77,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized - No authentication information available");
         }
 
-        String username = authentication.getName(); // Obtem o nome de usuário (login)
+        String username = authentication.getName();
 
         Optional<User> userOptional = userRepository.findByLogin(username);
         if (!userOptional.isPresent()) {

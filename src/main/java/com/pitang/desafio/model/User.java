@@ -1,5 +1,6 @@
 package com.pitang.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class User {
     private Date lastLogin;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinColumn(name = "user_id")
     private List<Car> cars;
 }
