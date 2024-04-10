@@ -105,7 +105,7 @@ public class UserService implements UserDetailsService {
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new RuntimeException("User not found"); //
+            throw new RuntimeException("User not found");
         }
     }
 
@@ -116,5 +116,9 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), Collections.emptyList());
     }
 
-   
+    public List<Car> findCarsByUserLogin(String login) throws UserNotFoundException {
+        User user = userRepository.findByLogin(login)
+                .orElseThrow(() -> new UserNotFoundException("User not found with login: " + login));
+        return user.getCars();
+    }
 }

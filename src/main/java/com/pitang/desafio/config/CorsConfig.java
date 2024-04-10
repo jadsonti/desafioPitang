@@ -12,14 +12,16 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.setAllowCredentials(true);
-        config.addExposedHeader("Authorization");
+        config.setAllowCredentials(true); // Permitir credenciais
+        config.addAllowedOrigin("http://localhost:4200"); // Adicione as origens permitidas explicitamente aqui
+        // Para permitir múltiplas origens específicas, repita a linha acima para cada origem
+        // ou use config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "https://meusite.com"));
+        config.addAllowedHeader("*"); // Permitir todos os headers
+        config.addAllowedMethod("*"); // Permitir todos os métodos (GET, POST, etc.)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", config); // Aplicar configuração de CORS para todas as rotas
+
         return new CorsFilter(source);
     }
 }
