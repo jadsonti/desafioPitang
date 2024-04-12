@@ -3,6 +3,7 @@ package com.pitang.desafio.service;
 import com.pitang.desafio.exception.UserNotFoundException;
 import com.pitang.desafio.model.Car;
 import com.pitang.desafio.model.User;
+import com.pitang.desafio.repository.CarRepository;
 import com.pitang.desafio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -25,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CarRepository carRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -67,11 +73,11 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
 
-        if (userDetails.getEmail() != null && !userDetails.getEmail().equals(user.getEmail()) && userRepository.findByEmail(userDetails.getEmail()).isPresent()) {
+        if (!user.getEmail().equals(userDetails.getEmail()) && userRepository.findByEmail(userDetails.getEmail()).isPresent()) {
             throw new Exception("Email already exists");
         }
 
-        if (userDetails.getLogin() != null && !userDetails.getLogin().equals(user.getLogin()) && userRepository.findByLogin(userDetails.getLogin()).isPresent()) {
+        if (!user.getLogin().equals(userDetails.getLogin()) && userRepository.findByLogin(userDetails.getLogin()).isPresent()) {
             throw new Exception("Login already exists");
         }
 
@@ -80,15 +86,33 @@ public class UserService implements UserDetailsService {
         user.setEmail(userDetails.getEmail());
         user.setBirthday(userDetails.getBirthday());
         user.setLogin(userDetails.getLogin());
-        user.setPassword(userDetails.getPassword());
         user.setPhone(userDetails.getPhone());
-        user.setCars(userDetails.getCars());
+        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
 
-        if (user.getFirstName() == null || user.getEmail() == null || user.getLogin() == null) {
-            throw new Exception("Missing fields");
-        }
+        updateOrAddCars(user, userDetails.getCars());
 
         return userRepository.save(user);
+    }
+
+    private void updateOrAddCars(User user, List<Car> newCars) {
+        if (newCars != null) {
+            user.getCars().clear();
+
+            newCars.forEach(newCar -> {
+                Car managedCar = carRepository.findById(newCar.getId())
+                        .map(existingCar -> {
+                            existingCar.setManufactureYear(newCar.getManufactureYear());
+                            existingCar.setLicensePlate(newCar.getLicensePlate());
+                            existingCar.setModel(newCar.getModel());
+                            existingCar.setColor(newCar.getColor());
+                            return existingCar;
+                        }).orElseGet(() -> {
+                            newCar.setUser(user);
+                            return newCar;
+                        });
+                user.getCars().add(managedCar);
+            });
+        }
     }
 
 
@@ -121,4 +145,12 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UserNotFoundException("User not found with login: " + login));
         return user.getCars();
     }
+
+    public void onLoginSuccess(String username) {
+        User user = userRepository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with login: " + username));
+        user.setLastLogin(new Date());
+        userRepository.save(user);
+    }
+
 }

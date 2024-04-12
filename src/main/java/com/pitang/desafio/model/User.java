@@ -29,8 +29,20 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     @JoinColumn(name = "user_id")
     private List<Car> cars;
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+        this.lastLogin = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastLogin = new Date();
+    }
 }
