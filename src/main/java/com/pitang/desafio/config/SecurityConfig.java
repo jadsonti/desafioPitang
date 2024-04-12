@@ -13,7 +13,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
 import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -24,24 +23,23 @@ public class SecurityConfig {
 
     @Autowired
     JwtRequestFilter jwtRequestFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers
-                        .frameOptions(frameOptions -> frameOptions.sameOrigin())
-                )
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(
                                 "/api/signin",
                                 "/h2-console/**",
                                 "/api/users",
                                 "/api/users/**",
-                                "/v2/api-docs",
-                                "/swagger-resources/**",
-                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
                                 "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
                         .anyRequest().authenticated()
@@ -64,11 +62,11 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-        configuration.setAllowCredentials(true);
+        // Mudança aqui para permitir ou não as credenciais
+        configuration.setAllowCredentials(false); // Se definido como true, não use `*` para origins
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
