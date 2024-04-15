@@ -2,12 +2,15 @@ package com.pitang.desafio.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "app_users")
 public class User {
     @Id
@@ -34,13 +37,22 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Car> cars;
 
-
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
         this.lastLogin = new Date();
     }
 
+    public User(Long id, String firstName, String lastName, String email, Date birthday, String login, String password, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthday = birthday;
+        this.login = login;
+        this.password = password;
+        this.phone = phone;
+    }
     @PreUpdate
     protected void onUpdate() {
         this.lastLogin = new Date();
