@@ -1,5 +1,70 @@
 <h1>Desafio Pitang</h1>
 <p>Prova prática Pitang</p>
+<h2>Importante, assista ao vídeo!</h2>
+<iframe src="https://player.vimeo.com/video/934681608?h=e03027af67" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/934681608">Jadson Jos&eacute; - Desafio Pitang Java</a> from <a href="https://vimeo.com/user218165605">Jadson Jos&eacute;</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+
+
+<h1>Execute o projeto em sua máquina, realizando os passos:</h1>
+<b>1. Pré-requisitos</b><br>
+Antes de começar, você precisará ter instalado em sua máquina:<br>
+<ul>
+<li>Git;</li> 
+<li>Java (para o back-end, versão Java 21);</li> 
+<li>Maven (para gerenciar dependências do back-end);</li> 
+<li>Node.js e npm (para o front-end);</li> 
+<li>Angular CLI (para o front-end) Angular 10;</li> 
+<li>Um IDE ou editor de texto de preferência, como IntelliJ IDEA para Java e Visual Studio Code para Angular.</li> 
+</ul>
+
+<b>2. Clonando os Repositórios</b><br>
+Clonar o Repositório Back-end<br>
+<ul>
+<li>Abra o terminal.</li> 
+<li>Navegue até o diretório onde deseja clonar o projeto.</li> 
+<li>Execute o comando:</li> 
+<li>git clone https://github.com/jadsonti/desafioPitang.git</li>
+</ul>
+
+Clonar o Repositório Front-end
+<ul>
+<li>Ainda no terminal, navegue até o diretório onde deseja clonar o projeto front-end.</li> 
+<li>Execute o comando:</li> 
+<li>git clone https://github.com/jadsonti/desafioPitang-web.git</li>
+</ul>
+
+<b>3. Configurando e Executando o Back-end</b><br>
+Navegue até a pasta do projeto clonado do back-end:
+
+<i>cd [nome-da-pasta-back-end]</i>
+
+Execute o Maven para instalar as dependências e construir o projeto:<br>
+comandos:
+<ul>
+<li>mvn clean install</li>
+<li><b>Inicie a aplicação:</b></li>
+<li>mvn spring-boot:run</li>
+Isso irá iniciar o servidor back-end, geralmente acessível via http://localhost:8080.
+</ul>
+
+<b>4. Configurando e Executando o Front-end</b><br>
+Navegue até a pasta do projeto clonado do front-end:
+
+<i>cd [nome-da-pasta-front-end]</i>
+
+Execute o Maven para instalar as dependências e construir o projeto:<br>
+comandos:
+<ul>
+<li>mvn clean install</li>
+<li><b>Inicie a aplicação:</b></li>
+<li>ng serve</li>
+Por padrão, isso disponibilizará o front-end no endereço http://localhost:4200.
+</ul>
+
+<b>Acesso ao banco de dados</b><br>
+link: <i>http://localhost:8080/h2-console</i><br>
+<b>usuario: root</b><br>
+<b>senha: jadson</b>
 
 <h1>ESTÓRIAS DE USUÁRIO:</h1>
 
